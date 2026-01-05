@@ -1,4 +1,8 @@
-mtpy-v2
+# Install GitHub versions first to ensure compatibility with Python 3.12
+git+https://github.com/kujaku11/mt_metadata.git@pydantic
+git+https://github.com/kujaku11/mth5.git@old_pydantic
+git+https://github.com/simpeg/aurora@pydantic
+git+https://github.com/MTgeophysics/mtpy-v2.git
 git+https://github.com/kujaku11/mth5_test_data.git
 jupyterlab>=4.0.0
 notebook>=7.0.0
