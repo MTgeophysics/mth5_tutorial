@@ -1,0 +1,102 @@
+name: Test Environment Setup
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-environment:
+    name: Test Environment (${{ matrix.python-version }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+    
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: pip-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          pip-${{ runner.os }}-py${{ matrix.python-version }}-
+    
+    - name: Install dependencies from requirements.txt
+      run: |
+        python --version
+        uv pip install --system -r requirements.txt
+    
+    - name: Test package imports and print versions
+      run: |
+        python -c "
+        import sys
+        print('=' * 60)
+        print('Python version:', sys.version)
+        print('=' * 60)
+        
+        packages = [
+            ('mt_metadata', 'mt_metadata'),
+            ('mth5', 'mth5'),
+            ('aurora', 'aurora'),
+            ('mtpy', 'mtpy'),
+            ('simpeg', 'simpeg'),
+        ]
+        
+        all_success = True
+        for display_name, import_name in packages:
+            try:
+                module = __import__(import_name)
+                version = getattr(module, '__version__', 'unknown')
+                print(f'✓ {display_name:15s} version: {version}')
+            except ImportError as e:
+                print(f'✗ {display_name:15s} FAILED: {e}')
+                all_success = False
+        
+        print('=' * 60)
+        if all_success:
+            print('SUCCESS: All packages imported successfully!')
+        else:
+            print('FAILURE: Some packages failed to import')
+            sys.exit(1)
+        "
+    
+    - name: Run basic functionality test
+      run: |
+        python -c "
+        import mt_metadata
+        import mth5
+        import numpy as np
+        
+        print('Testing basic mth5 functionality...')
+        print(f'mth5 version: {mth5.__version__}')
+        print(f'mt_metadata version: {mt_metadata.__version__}')
+        
+        # Test that we can create metadata objects
+        from mt_metadata.timeseries import Station
+        station = Station()
+        print(f'Created Station metadata object: {station.id}')
+        
+        print('Basic functionality test passed!')
+        "
