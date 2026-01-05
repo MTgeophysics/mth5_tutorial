@@ -85,22 +85,13 @@ cd mth5
 pip install -e .
 ```
 
-## Requirements
-
-- Python 3.11
-- h5py
-- numpy
-- xarray
-- mt-metadata
-- pandas
-
-All dependencies are automatically installed with the mth5 package.
-
 ## Getting Started
 
 ### Option 1: Run in the Cloud (No Installation Required)
 
 Click the Binder badge at the top of this README to launch an interactive environment in your browser. This is the easiest way to try the tutorials without installing anything locally.
+
+This will open a Jupyter session in the cloud that you can run with out installing anything on your local machine.  All the example notebooks are in `/src/notebooks`.
 
 ### Option 2: Run Locally
 
