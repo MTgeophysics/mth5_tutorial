@@ -1,6 +1,6 @@
 # MTH5 Tutorial
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kujaku11/mth5_tutorial/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kujaku11/mth5_tutorial/main)
 
 A collection of Jupyter notebooks demonstrating how to use the **mth5** package to create, manipulate, and analyze MTH5 files from various magnetotelluric (MT) instruments.
 
