@@ -1,6 +1,12 @@
 # MTH5 Tutorial
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/kujaku11/mth5_tutorial/HEAD)
+
 A collection of Jupyter notebooks demonstrating how to use the **mth5** package to create, manipulate, and analyze MTH5 files from various magnetotelluric (MT) instruments.
+
+## Quick Start with Binder
+
+Click the "launch binder" badge above to run these tutorials in your browser without installing anything! Binder will create a live Jupyter environment with all dependencies pre-installed.
 
 ## About MTH5
 
@@ -91,6 +97,12 @@ pip install -e .
 All dependencies are automatically installed with the mth5 package.
 
 ## Getting Started
+
+### Option 1: Run in the Cloud (No Installation Required)
+
+Click the Binder badge at the top of this README to launch an interactive environment in your browser. This is the easiest way to try the tutorials without installing anything locally.
+
+### Option 2: Run Locally
 
 1. Clone this repository:
    ```bash
