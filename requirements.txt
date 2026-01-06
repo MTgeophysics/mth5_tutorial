@@ -4,6 +4,12 @@ git+https://github.com/kujaku11/mth5.git@old_pydantic
 git+https://github.com/simpeg/aurora@pydantic
 git+https://github.com/MTgeophysics/mtpy-v2.git@pydantic
 git+https://github.com/kujaku11/mth5_test_data.git
+
+
+# Force compatible numba/llvmlite for all Python 3.11+
+numba>=0.56.0
+llvmlite>=0.39.0
+# Other dependencies
 jupyterlab>=4.0.0
 notebook>=7.0.0
 ipywidgets>=8.0.0
