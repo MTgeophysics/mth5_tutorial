@@ -25,6 +25,8 @@ An **MTH5 file** is an HDF5-based container format specifically designed for mag
 
 MTH5 files are ideal for archiving MT time series data, facilitating data sharing, and ensuring long-term data preservation with complete provenance.
 
+For a simple MATLAB based reader see: https://github.com/castro-cesar/mth5_viewer/
+
 ## Repository Contents
 
 This repository contains tutorial notebooks demonstrating how to:
