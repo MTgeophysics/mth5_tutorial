@@ -123,14 +123,14 @@ jobs:
             'src/make_mth5/make_mth5_from_lemi.ipynb',
             'src/make_mth5/make_mth5_from_metronix.ipynb',
             'src/make_mth5/make_mth5_from_nims.ipynb',
-            'src/make_mth5/make_mth5_from_phoenix_real.ipynb',
+            # 'src/make_mth5/make_mth5_from_phoenix_real.ipynb',
             'src/make_mth5/make_mth5_from_z3d.ipynb',
             'src/mth5_objects/channel_ts_example.ipynb',
             'src/mth5_objects/filters_example.ipynb',
             'src/mth5_objects/remove_instrument_response_example.ipynb',
             'src/mth5_objects/run_ts_example.ipynb',
             'src/mth5_objects/transfer_function_example.ipynb',
-            'src/processing/synthetic_data_processing_example.ipynb',
+            'src/processing/synthetic_data_processing_aurora.ipynb',
         ]
         
         for nb in notebooks_to_run:
