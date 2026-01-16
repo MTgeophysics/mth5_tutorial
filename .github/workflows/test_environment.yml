@@ -123,7 +123,6 @@ jobs:
             'src/make_mth5/make_mth5_from_lemi.ipynb',
             'src/make_mth5/make_mth5_from_metronix.ipynb',
             'src/make_mth5/make_mth5_from_nims.ipynb',
-            # 'src/make_mth5/make_mth5_from_phoenix_real.ipynb',
             'src/make_mth5/make_mth5_from_z3d.ipynb',
             'src/mth5_objects/channel_ts_example.ipynb',
             'src/mth5_objects/filters_example.ipynb',
