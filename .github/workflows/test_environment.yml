@@ -100,3 +100,63 @@ jobs:
         
         print('Basic functionality test passed!')
         "
+    
+    - name: Install notebook testing dependencies
+      run: |
+        uv pip install --system jupyter nbconvert
+    
+    - name: Test running notebooks in /src
+      run: |
+        python -c "
+        import os
+        import subprocess
+        import sys
+        
+        print('Testing notebooks in /src directory...')
+        print('=' * 60)
+        
+        src_dir = 'src'
+        failed_notebooks = []
+        passed_notebooks = []
+        
+        for root, dirs, files in os.walk(src_dir):
+            for file in sorted(files):
+                if file.endswith('.ipynb'):
+                    notebook_path = os.path.join(root, file)
+                    print(f'Running: {notebook_path}')
+                    
+                    try:
+                        result = subprocess.run(
+                            [sys.executable, '-m', 'nbconvert', '--to', 'notebook', 
+                             '--execute', '--ExecutePreprocessor.timeout=600', 
+                             notebook_path],
+                            capture_output=True,
+                            text=True,
+                            timeout=900
+                        )
+                        
+                        if result.returncode == 0:
+                            print(f'  ✓ PASSED')
+                            passed_notebooks.append(notebook_path)
+                        else:
+                            print(f'  ✗ FAILED')
+                            print(f'    Error: {result.stderr}')
+                            failed_notebooks.append(notebook_path)
+                    except subprocess.TimeoutExpired:
+                        print(f'  ✗ TIMEOUT')
+                        failed_notebooks.append(notebook_path)
+                    except Exception as e:
+                        print(f'  ✗ ERROR: {e}')
+                        failed_notebooks.append(notebook_path)
+        
+        print('=' * 60)
+        print(f'Passed: {len(passed_notebooks)}/{len(passed_notebooks) + len(failed_notebooks)}')
+        
+        if failed_notebooks:
+            print('\\nFailed notebooks:')
+            for nb in failed_notebooks:
+                print(f'  - {nb}')
+            sys.exit(1)
+        else:
+            print('All notebooks passed!')
+        "
