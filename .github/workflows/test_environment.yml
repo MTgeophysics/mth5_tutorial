@@ -108,7 +108,7 @@ jobs:
     - name: Test running notebooks in /src
       run: |
         python -c "
-        import os
+        from pathlib import Path
         import subprocess
         import sys
         
@@ -118,40 +118,53 @@ jobs:
         src_dir = 'src'
         failed_notebooks = []
         passed_notebooks = []
+
+        notebooks_to_run = [
+            'src/make_mth5/make_mth5_from_lemi.ipynb',
+            'src/make_mth5/make_mth5_from_metronix.ipynb',
+            'src/make_mth5/make_mth5_from_nims.ipynb',
+            'src/make_mth5/make_mth5_from_phoenix_real.ipynb',
+            'src/make_mth5/make_mth5_from_z3d.ipynb',
+            'src/mth5_objects/channel_ts_example.ipynb',
+            'src/mth5_objects/filters_example.ipynb',
+            'src/mth5_objects/remove_instrument_response_example.ipynb',
+            'src/mth5_objects/run_ts_example.ipynb',
+            'src/mth5_objects/transfer_function_example.ipynb',
+            'src/processing/synthetic_data_processing_example.ipynb',
+        ]
         
-        for root, dirs, files in os.walk(src_dir):
-            for file in sorted(files):
-                if file.endswith('.ipynb'):
-                    notebook_path = os.path.join(root, file)
-                    print(f'Running: {notebook_path}')
-                    
-                    try:
-                        result = subprocess.run(
-                            [sys.executable, '-m', 'nbconvert', '--to', 'notebook', 
-                             '--execute', '--ExecutePreprocessor.timeout=600', 
-                             notebook_path],
-                            capture_output=True,
-                            text=True,
-                            timeout=900
-                        )
-                        
-                        if result.returncode == 0:
-                            print(f'  ✓ PASSED')
-                            passed_notebooks.append(notebook_path)
-                        else:
-                            print(f'  ✗ FAILED')
-                            print(f'    Error: {result.stderr}')
-                            failed_notebooks.append(notebook_path)
-                    except subprocess.TimeoutExpired:
-                        print(f'  ✗ TIMEOUT')
-                        failed_notebooks.append(notebook_path)
-                    except Exception as e:
-                        print(f'  ✗ ERROR: {e}')
-                        failed_notebooks.append(notebook_path)
+        for nb in notebooks_to_run:
+            notebook_path = Path(nb)
+            print('=' * 40)
+            print(f'Running: {notebook_path}')
+            print('=' * 40)
+            
+            try:
+                result = subprocess.run(
+                    [sys.executable, '-m', 'nbconvert', '--to', 'notebook', 
+                      '--execute', '--ExecutePreprocessor.timeout=600', 
+                      notebook_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=900
+                )
+                
+                if result.returncode == 0:
+                    print(f'  ✓ PASSED')
+                    passed_notebooks.append(notebook_path)
+                else:
+                    print(f'  ✗ FAILED')
+                    print(f'    Error: {result.stderr}')
+                    failed_notebooks.append(notebook_path)
+            except subprocess.TimeoutExpired:
+                print(f'  ✗ TIMEOUT')
+                failed_notebooks.append(notebook_path)
+            except Exception as e:
+                print(f'  ✗ ERROR: {e}')
+                failed_notebooks.append(notebook_path)
         
-        print('=' * 60)
         print(f'Passed: {len(passed_notebooks)}/{len(passed_notebooks) + len(failed_notebooks)}')
-        
+        print('=' * 60)
         if failed_notebooks:
             print('\\nFailed notebooks:')
             for nb in failed_notebooks:
