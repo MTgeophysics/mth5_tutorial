@@ -65,55 +65,120 @@ This repository contains tutorial notebooks demonstrating how to:
 - `mth5_in_parallel.ipynb` - Parallel processing of MTH5 files
 - `mth5_in_parallel_one_file_per_station.ipynb` - Multi-file parallel workflows
 
-## Installation
-
-### Using pip
-
-```bash
-pip install mth5
-```
-
-### Using conda
-
-```bash
-conda install -c conda-forge mth5
-```
-
-### From source
-
-```bash
-git clone https://github.com/kujaku11/mth5.git
-cd mth5
-pip install -e .
-```
-
 ## Getting Started
 
-### Option 1: Run in the Cloud (No Installation Required)
+### Option 1: Run in the Cloud (No Installation Required!) 🚀
 
-Click the Binder badge at the top of this README to launch an interactive environment in your browser. This is the easiest way to try the tutorials without installing anything locally.
+**Easiest way to get started** - Click the Binder badge at the top of this README to launch an interactive Jupyter environment in your browser. All dependencies are pre-installed and notebooks are ready to run immediately. No local installation required!
 
-This will open a Jupyter session in the cloud that you can run with out installing anything on your local machine.  All the example notebooks are in `/src/notebooks`.
+All example notebooks are located in `/src/notebooks`.
 
 ### Option 2: Run Locally
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/kujaku11/mth5_tutorial.git
-   cd mth5_tutorial
-   ```
+Choose your preferred environment manager below:
 
-2. Install mth5 and Jupyter:
-   ```bash
-   pip install mth5 jupyter
-   ```
+#### Prerequisites
 
-3. Launch Jupyter:
-   ```bash
-   jupyter notebook src/notebooks/
-   ```
+First, clone this repository:
 
-4. Open any notebook and follow along with the examples.
+```bash
+git clone https://github.com/MTgeophysics/mth5_tutorial.git
+cd mth5_tutorial
+```
+
+#### Installation Method 1: venv + pip (Recommended)
+
+**Best for most users** - Uses Python's built-in virtual environment manager.
+
+```bash
+# Create a virtual environment
+python -m venv mth5_env
+
+# Activate the environment
+# On Windows:
+mth5_env\Scripts\activate
+# On macOS/Linux:
+source mth5_env/bin/activate
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Launch Jupyter
+jupyter notebook src/notebooks/
+```
+
+To deactivate when done:
+```bash
+deactivate
+```
+
+#### Installation Method 2: conda
+
+**Good for managing Python versions** - Uses Anaconda/Miniconda.
+
+```bash
+# Create a conda environment
+conda create -n mth5_tutorial python=3.13
+
+# Activate the environment
+conda activate mth5_tutorial
+
+# Install dependencies
+pip install -r requirements.txt
+# OR install from conda-forge if available:
+# conda install -c conda-forge mth5 jupyter
+
+# Launch Jupyter
+jupyter notebook src/notebooks/
+```
+
+To deactivate when done:
+```bash
+conda deactivate
+```
+
+#### Installation Method 3: uv (Fast Alternative)
+
+**Fastest installation** - Modern Python package manager with speed optimizations.
+
+```bash
+# Install uv if you don't have it (https://github.com/astral-sh/uv)
+# On Windows (PowerShell):
+# irm https://astral.sh/uv/install.ps1 | iex
+# On macOS/Linux:
+# curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create and activate virtual environment
+uv venv
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+uv pip install -r requirements.txt
+
+# Launch Jupyter
+jupyter notebook src/notebooks/
+```
+
+#### Running the Tutorials
+
+After installation with any method above:
+
+1. **Launch Jupyter**: The command `jupyter notebook src/notebooks/` will open Jupyter in your browser
+2. **Navigate to notebooks**: Click on any `.ipynb` file to open a tutorial
+3. **Run cells**: Use `Shift+Enter` to execute cells or click the "Run" button
+4. **Follow along**: Each notebook contains detailed explanations and examples
+
+#### Troubleshooting
+
+**Import errors**: Make sure your virtual environment is activated before running Jupyter
+
+**Jupyter not found**: Install it explicitly with `pip install jupyter` or `conda install jupyter`
+
+**Module not found**: Reinstall dependencies with `pip install -r requirements.txt`
 
 ## Documentation
 
